@@ -72,5 +72,4 @@ public class User implements Serializable {
 	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
 	}
-
 }

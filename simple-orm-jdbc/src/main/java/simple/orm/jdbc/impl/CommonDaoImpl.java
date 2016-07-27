@@ -168,5 +168,4 @@ public class CommonDaoImpl implements CommonDao {
 	public SQLResult execute(SQLCommand command) throws DaoException {
 		return null;
 	}
-
 }

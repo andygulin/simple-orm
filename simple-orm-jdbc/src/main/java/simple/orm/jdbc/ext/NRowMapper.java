@@ -214,5 +214,4 @@ public class NRowMapper<T> implements RowMapper<T> {
 	public static <T> NRowMapper<T> newInstance(LobHandler lobHandler, Class<T> mappedClass) {
 		return new NRowMapper<T>(lobHandler, mappedClass);
 	}
-
 }

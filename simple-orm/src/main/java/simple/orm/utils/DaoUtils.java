@@ -19,7 +19,6 @@ public class DaoUtils {
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static final <T> DaoSupport<T> getDaoSupport(Class<T> clazz) {
-
 		if (MapUtils.isEmpty(daocache)) {
 			Map<String, DaoSupport> tmpMap = OrmApplicationContextUtils.getApplicationContext()
 					.getBeansOfType(DaoSupport.class);
@@ -29,5 +28,4 @@ public class DaoUtils {
 		}
 		return daocache.get(clazz);
 	}
-
 }

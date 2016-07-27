@@ -13,5 +13,4 @@ public class OrmApplicationContextUtils {
 	public static ApplicationContext getApplicationContext() {
 		return APPLICATION_CONTEXT;
 	}
-
 }

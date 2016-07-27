@@ -106,5 +106,4 @@ public class Page<T> implements Serializable {
 		}
 		return foo;
 	}
-
 }

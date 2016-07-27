@@ -178,5 +178,4 @@ public interface DaoSupport<T> {
 	void updateField(Serializable pk, String field, Object value) throws DaoException;
 
 	void updateField(Serializable pk, String[] fields, Object[] values) throws DaoException;
-
 }

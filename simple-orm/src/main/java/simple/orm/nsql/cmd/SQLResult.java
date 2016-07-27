@@ -18,5 +18,4 @@ public interface SQLResult {
 	<T> List<T> asList(Class<T> tClass);
 
 	<T> T[] asArray(Class<T> tClass);
-
 }

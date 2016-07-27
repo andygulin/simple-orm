@@ -44,5 +44,4 @@ public class DaoException extends Exception {
 	public void setErrorCode(int errorCode) {
 		this.errorCode = errorCode;
 	}
-
 }

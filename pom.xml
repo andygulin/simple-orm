@@ -14,9 +14,9 @@
 		<compile.level>1.7</compile.level>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-		<spring.version>4.2.6.RELEASE</spring.version>
-		<fastjson.version>1.2.12</fastjson.version>
-		<druid.version>1.0.20</druid.version>
+		<spring.version>4.2.7.RELEASE</spring.version>
+		<fastjson.version>1.2.14</fastjson.version>
+		<druid.version>1.0.23</druid.version>
 		<persistence-api.version>1.0-rev-1</persistence-api.version>
 		<commons-configuration.version>1.10</commons-configuration.version>
 		<commons-beanutils.version>1.9.2</commons-beanutils.version>

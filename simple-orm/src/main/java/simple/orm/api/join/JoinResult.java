@@ -40,5 +40,4 @@ public class JoinResult {
 			throw new RuntimeException(e);
 		}
 	}
-
 }

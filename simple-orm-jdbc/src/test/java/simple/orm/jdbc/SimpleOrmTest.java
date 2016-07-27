@@ -17,7 +17,7 @@ import simple.orm.exception.DaoException;
 
 @Transactional
 @ContextConfiguration(classes = DataSourceConfiguration.class)
-public class OrmTest extends AbstractJUnit4SpringContextTests {
+public class SimpleOrmTest extends AbstractJUnit4SpringContextTests {
 
 	@Autowired
 	private UserDao userDao;
