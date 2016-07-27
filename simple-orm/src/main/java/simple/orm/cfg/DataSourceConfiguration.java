@@ -24,7 +24,7 @@ import simple.orm.utils.OrmStartupService;
 
 @Configuration
 @EnableTransactionManagement
-@ComponentScan(basePackages = "simple.orm")
+@ComponentScan(basePackages = "simple.orm.jdbc")
 public class DataSourceConfiguration {
 
 	@Bean(name = "dataSource")

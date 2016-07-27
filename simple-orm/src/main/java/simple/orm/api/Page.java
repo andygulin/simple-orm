@@ -26,7 +26,7 @@ public class Page<T> implements Serializable {
 		} catch (ConfigurationException | IOException e) {
 			e.printStackTrace();
 		}
-		DEFAULT_PAGE_NO = conf.getInt("default.orm.page.star");
+		DEFAULT_PAGE_NO = conf.getInt("default.orm.page.start");
 		DEFAULT_PAGE_SIZE = conf.getInt("default.orm.page.size");
 	}
 
