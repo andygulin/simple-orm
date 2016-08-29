@@ -10,7 +10,7 @@ mvn clean install
 <dependency>
 	<groupId>simple.orm</groupId>
 	<artifactId>simple-orm-jdbc</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 </dependency>
 ```
 ### 加载ORM框架，XML方式
