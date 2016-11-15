@@ -1,4 +1,4 @@
-# 简单的ORM框架，基于spring-jdbc实现
+# 简单的ORM框架，基于Spring-JDBC实现
 
 ### 安装到本地maven仓库
 ```

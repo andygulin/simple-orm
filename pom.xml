@@ -14,19 +14,19 @@
 		<compile.level>1.7</compile.level>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-		<spring.version>4.2.7.RELEASE</spring.version>
-		<fastjson.version>1.2.14</fastjson.version>
-		<druid.version>1.0.23</druid.version>
+		<spring.version>4.2.8.RELEASE</spring.version>
+		<fastjson.version>1.2.20</fastjson.version>
+		<druid.version>1.0.26</druid.version>
 		<persistence-api.version>1.0-rev-1</persistence-api.version>
 		<commons-configuration.version>1.10</commons-configuration.version>
-		<commons-beanutils.version>1.9.2</commons-beanutils.version>
+		<commons-beanutils.version>1.9.3</commons-beanutils.version>
 		<commons-io.version>2.5</commons-io.version>
-		<mysql-connector-java.version>5.1.39</mysql-connector-java.version>
+		<mysql-connector-java.version>5.1.40</mysql-connector-java.version>
 
-		<maven-surefire-plugin.version>2.17</maven-surefire-plugin.version>
-		<maven-source-plugin.version>2.2.1</maven-source-plugin.version>
-		<maven-resources-plugin.version>2.6</maven-resources-plugin.version>
-		<maven-compiler-plugin.version>3.1</maven-compiler-plugin.version>
+		<maven-surefire-plugin.version>2.19.1</maven-surefire-plugin.version>
+		<maven-source-plugin.version>3.0.1</maven-source-plugin.version>
+		<maven-resources-plugin.version>3.0.1</maven-resources-plugin.version>
+		<maven-compiler-plugin.version>3.6.0</maven-compiler-plugin.version>
 	</properties>
 
 	<dependencies>

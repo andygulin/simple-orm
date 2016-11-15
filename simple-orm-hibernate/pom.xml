@@ -11,6 +11,32 @@
 	<artifactId>simple-orm-hibernate</artifactId>
 	<name>simple-orm-hibernate</name>
 	<url>http://maven.apache.org</url>
+
+	<properties>
+		<hibernate.version>4.3.11.Final</hibernate.version>
+		<junit.version>4.12</junit.version>
+	</properties>
 	<dependencies>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-ehcache</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>simple.orm</groupId>
+			<artifactId>simple-orm</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 </project>
