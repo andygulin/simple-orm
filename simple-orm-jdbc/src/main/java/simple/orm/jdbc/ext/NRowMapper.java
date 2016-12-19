@@ -1,6 +1,22 @@
 
 package simple.orm.jdbc.ext;
 
+import com.alibaba.fastjson.JSON;
+import org.apache.commons.lang.ClassUtils;
+import org.apache.commons.lang.SerializationUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.*;
+import org.springframework.dao.DataRetrievalFailureException;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.JdbcUtils;
+import org.springframework.jdbc.support.lob.LobHandler;
+import org.springframework.util.Assert;
+import simple.orm.meta.EntityColumnMetadata;
+import simple.orm.meta.EntityMetadata;
+import simple.orm.utils.ObjectUtils;
+
 import java.beans.PropertyDescriptor;
 import java.io.InputStream;
 import java.io.Reader;
@@ -12,28 +28,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-
-import org.apache.commons.lang.ClassUtils;
-import org.apache.commons.lang.SerializationUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.BeanWrapper;
-import org.springframework.beans.NotWritablePropertyException;
-import org.springframework.beans.PropertyAccessorFactory;
-import org.springframework.beans.TypeMismatchException;
-import org.springframework.dao.DataRetrievalFailureException;
-import org.springframework.dao.InvalidDataAccessApiUsageException;
-import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.support.JdbcUtils;
-import org.springframework.jdbc.support.lob.LobHandler;
-import org.springframework.util.Assert;
-
-import com.alibaba.fastjson.JSON;
-
-import simple.orm.meta.EntityColumnMetadata;
-import simple.orm.meta.EntityMetadata;
-import simple.orm.utils.ObjectUtils;
 
 public class NRowMapper<T> implements RowMapper<T> {
 
@@ -71,8 +65,8 @@ public class NRowMapper<T> implements RowMapper<T> {
 
 	protected void initialize(Class<T> mappedClass) {
 		this.mappedClass = mappedClass;
-		this.mappedFields = new HashMap<String, PropertyDescriptor>();
-		this.mappedProperties = new HashSet<String>();
+		this.mappedFields = new HashMap<>();
+		this.mappedProperties = new HashSet<>();
 		PropertyDescriptor[] pds = BeanUtils.getPropertyDescriptors(mappedClass);
 		for (PropertyDescriptor pd : pds) {
 			if (pd.getWriteMethod() != null) {

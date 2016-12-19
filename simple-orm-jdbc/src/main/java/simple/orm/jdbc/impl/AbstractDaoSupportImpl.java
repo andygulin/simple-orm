@@ -1,18 +1,5 @@
 package simple.orm.jdbc.impl;
 
-import java.io.Serializable;
-import java.lang.reflect.Method;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
-import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.ListUtils;
 import org.apache.commons.collections.MapUtils;
@@ -32,25 +19,26 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.jdbc.support.lob.DefaultLobHandler;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-
 import simple.orm.api.DaoSupport;
 import simple.orm.api.Page;
 import simple.orm.api.query.Order;
 import simple.orm.api.query.QueryContext;
 import simple.orm.api.query.QueryContextPiece;
-import simple.orm.api.query.operator.BETWEEN;
-import simple.orm.api.query.operator.IN;
-import simple.orm.api.query.operator.NOT_BETWEEN;
-import simple.orm.api.query.operator.NOT_IN;
-import simple.orm.api.query.operator.NOT_NULL;
-import simple.orm.api.query.operator.NULL;
-import simple.orm.api.query.operator.Operator;
+import simple.orm.api.query.operator.*;
 import simple.orm.exception.DaoException;
 import simple.orm.jdbc.ext.InsertCreator;
 import simple.orm.jdbc.ext.NRowMapper;
 import simple.orm.meta.EntityColumnMetadata;
 import simple.orm.meta.EntityMetadata;
 import simple.orm.utils.ObjectUtils;
+
+import java.io.Serializable;
+import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.text.MessageFormat;
+import java.util.*;
+import java.util.Map.Entry;
 
 @Repository
 public abstract class AbstractDaoSupportImpl<T> implements DaoSupport<T> {
@@ -115,9 +103,9 @@ public abstract class AbstractDaoSupportImpl<T> implements DaoSupport<T> {
 
 	public AbstractDaoSupportImpl() {
 		super();
-		this.metadata = new EntityMetadata<T>(this.getEntityClass());
-		StringBuffer sb = null;
-		List<String> tmpArr = new ArrayList<String>();
+		this.metadata = new EntityMetadata<>(this.getEntityClass());
+		StringBuffer sb;
+		List<String> tmpArr = new ArrayList<>();
 		for (EntityColumnMetadata foo : this.metadata.getAllColumnMetadatas()) {
 			sb = new StringBuffer();
 			tmpArr.add(sb.append("`").append(foo.getName()).append("` as `").append(foo.getField()).append("`")
@@ -125,8 +113,8 @@ public abstract class AbstractDaoSupportImpl<T> implements DaoSupport<T> {
 		}
 		this.selectHead = StringUtils.join(tmpArr, ",");
 
-		List<String> liWithPK = new ArrayList<String>();
-		List<String> liWithOutPK = new ArrayList<String>();
+		List<String> liWithPK = new ArrayList<>();
+		List<String> liWithOutPK = new ArrayList<>();
 		for (EntityColumnMetadata col : this.metadata.getAllColumnMetadatas()) {
 			sb = new StringBuffer();
 			sb.append("`").append(col.getName()).append("`=:").append(col.getField()).toString();
@@ -179,7 +167,7 @@ public abstract class AbstractDaoSupportImpl<T> implements DaoSupport<T> {
 		StringBuffer sb = new StringBuffer();
 		sb.append(CONST_SELECT).append("count(*)").append(CONST_FROM).append(this.metadata.getQualifiedTableName())
 				.append(CONST_WHERE).append(CONST_ONE);
-		List<Object> params = new ArrayList<Object>();
+		List<Object> params = new ArrayList<>();
 		this.parseQueryContext(sb, context, params);
 
 		final String sql = sb.toString();
@@ -193,7 +181,7 @@ public abstract class AbstractDaoSupportImpl<T> implements DaoSupport<T> {
 
 	@Override
 	public long count(String field, Object value) throws DaoException {
-		final Map<String, Object> map = new HashMap<String, Object>(1);
+		final Map<String, Object> map = new HashMap<>(1);
 		map.put(field, value);
 		return this.count(map);
 	}
@@ -207,7 +195,7 @@ public abstract class AbstractDaoSupportImpl<T> implements DaoSupport<T> {
 				throw new DaoException("length of field array[" + field.length
 						+ "] doesn't equal with length of value array[" + values.length + "].");
 			} else {
-				map = new HashMap<String, Object>();
+				map = new HashMap<>();
 				for (int i = 0; i < field.length; i++) {
 					map.put(field[i], values[i]);
 				}
@@ -229,7 +217,7 @@ public abstract class AbstractDaoSupportImpl<T> implements DaoSupport<T> {
 
 	protected RowMapper<T> createRowMapper() {
 		if (this.rowMapper == null) {
-			this.rowMapper = new NRowMapper<T>(this.defaultLobHandler, this.getEntityClass());
+			this.rowMapper = new NRowMapper<>(this.defaultLobHandler, this.getEntityClass());
 		}
 		return this.rowMapper;
 	}
@@ -427,7 +415,7 @@ public abstract class AbstractDaoSupportImpl<T> implements DaoSupport<T> {
 		sb.append(CONST_SELECT).append(function).append("(")
 				.append(this.metadata.getColumnByField(field).getNameWithQuote()).append(") ").append(CONST_FROM)
 				.append(this.metadata.getQualifiedTableName()).append(CONST_WHERE).append(CONST_ONE);
-		List<Object> params = new ArrayList<Object>();
+		List<Object> params = new ArrayList<>();
 		this.parseQueryContext(sb, q, params);
 		final String sql = sb.toString();
 		return this.jdbcTemplate.queryForObject(sql, Number.class, params.toArray(new Object[params.size()]));
@@ -610,7 +598,7 @@ public abstract class AbstractDaoSupportImpl<T> implements DaoSupport<T> {
 		sb.append(CONST_SELECT).append(this.selectHead).append(CONST_FROM).append(this.metadata.getQualifiedTableName())
 				.append(CONST_WHERE).append(CONST_ONE);
 		if (MapUtils.isNotEmpty(map)) {
-			EntityColumnMetadata foo = null;
+			EntityColumnMetadata foo;
 			for (Iterator<Entry<String, Object>> it = map.entrySet().iterator(); it.hasNext();) {
 				Entry<String, Object> entry = it.next();
 				foo = this.metadata.getColumnByField(entry.getKey());
@@ -636,7 +624,7 @@ public abstract class AbstractDaoSupportImpl<T> implements DaoSupport<T> {
 		sb.append(CONST_SELECT).append(this.selectHead).append(CONST_FROM).append(this.metadata.getQualifiedTableName())
 				.append(CONST_WHERE).append(CONST_ONE);
 
-		final List<Object> params = new ArrayList<Object>();
+		final List<Object> params = new ArrayList<>();
 		this.parseQueryContext(sb, context, params);
 		this.parseOrder(sb, order);
 
@@ -753,7 +741,7 @@ public abstract class AbstractDaoSupportImpl<T> implements DaoSupport<T> {
 	@Override
 	public <E> E queryFieldFirst(String field, Class<E> fieldClass, QueryContext queryContext, Order... order)
 			throws DaoException {
-		List<Object> params = new ArrayList<Object>();
+		List<Object> params = new ArrayList<>();
 		StringBuffer sb = new StringBuffer();
 		sb.append(CONST_SELECT).append("DISTINCT(").append(this.metadata.getColumnByField(field).getNameWithQuote())
 				.append(") as `").append(field).append("` ").append(CONST_FROM)
@@ -838,7 +826,7 @@ public abstract class AbstractDaoSupportImpl<T> implements DaoSupport<T> {
 	@Override
 	public <E> List<E> queryFieldValues(String field, Class<E> fieldClass, QueryContext queryContext, Order... order)
 			throws DaoException {
-		List<Object> params = new ArrayList<Object>();
+		List<Object> params = new ArrayList<>();
 		StringBuffer sb = new StringBuffer();
 		sb.append(CONST_SELECT).append("DISTINCT(").append(this.metadata.getColumnByField(field).getNameWithQuote())
 				.append(") as `").append(field).append("` ").append(CONST_FROM)
@@ -853,7 +841,7 @@ public abstract class AbstractDaoSupportImpl<T> implements DaoSupport<T> {
 			if (CollectionUtils.isEmpty(li)) {
 				return ListUtils.EMPTY_LIST;
 			}
-			List<E> result = new ArrayList<E>();
+			List<E> result = new ArrayList<>();
 			for (T t : li) {
 				E foo = ObjectUtils.getValue(t, fieldClass, field);
 				result.add(foo);
@@ -969,7 +957,7 @@ public abstract class AbstractDaoSupportImpl<T> implements DaoSupport<T> {
 		StringBuffer sb = new StringBuffer();
 		sb.append(CONST_SELECT).append(this.selectHead).append(CONST_FROM).append(this.metadata.getQualifiedTableName())
 				.append(CONST_WHERE).append(CONST_ONE);
-		List<Object> params = new ArrayList<Object>();
+		List<Object> params = new ArrayList<>();
 		this.parseQueryContext(sb, context, params);
 		parseOrder(sb, order);
 		sb.append(" limit ").append(limitFrom).append(',').append(limitSize);
@@ -1066,7 +1054,7 @@ public abstract class AbstractDaoSupportImpl<T> implements DaoSupport<T> {
 		StringBuffer sb = new StringBuffer();
 		sb.append(CONST_SELECT).append(this.selectHead).append(CONST_FROM).append(this.metadata.getQualifiedTableName())
 				.append(CONST_WHERE).append(CONST_ONE);
-		final List<Object> params = new ArrayList<Object>();
+		final List<Object> params = new ArrayList<>();
 		this.parseQueryContext(sb, context, params);
 		this.parseOrder(sb, order);
 
@@ -1219,7 +1207,7 @@ public abstract class AbstractDaoSupportImpl<T> implements DaoSupport<T> {
 		StringBuffer sb = new StringBuffer();
 		sb.append(CONST_DELETE).append(CONST_FROM).append(this.metadata.getQualifiedTableName()).append(CONST_WHERE)
 				.append(CONST_ONE);
-		List<Object> params = new ArrayList<Object>();
+		List<Object> params = new ArrayList<>();
 		this.parseQueryContext(sb, queryContext, params);
 
 		if (CollectionUtils.isEmpty(params)) {

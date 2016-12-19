@@ -6,7 +6,7 @@ cd simple-orm
 mvn clean install
 ```
 ### 添加到项目pom.xml中
-```
+```xml
 <dependency>
 	<groupId>simple.orm</groupId>
 	<artifactId>simple-orm-jdbc</artifactId>
@@ -14,7 +14,7 @@ mvn clean install
 </dependency>
 ```
 ### 加载ORM框架，XML方式
-```
+```xml
 <context:component-scan base-package="simple.orm.cfg" />
 ```
 ### 加载ORM框架，注解方式
@@ -23,7 +23,7 @@ mvn clean install
 ```
 ## 开始使用
 ### 创建数据库
-```
+```sql
 CREATE TABLE `user` (
     `id` int(11) NOT NULL AUTO_INCREMENT,
     `name` varchar(20) DEFAULT NULL,
@@ -34,7 +34,7 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ```
 ### 创建Bean
-```
+```java
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
@@ -110,7 +110,7 @@ public class User implements Serializable {
 ```
 
 ### 创建DAO
-```
+```java
 import simple.orm.api.DaoSupport;
 
 public interface UserDao extends DaoSupport<User> {
@@ -119,7 +119,7 @@ public interface UserDao extends DaoSupport<User> {
 ```
 
 ### 创建DAO实现
-```
+```java
 import org.springframework.stereotype.Repository;
 import simple.orm.jdbc.impl.AbstractDaoSupportImpl;
 
@@ -130,7 +130,7 @@ public class UserDaoImpl extends AbstractDaoSupportImpl<User> implements UserDao
 ```
 
 ### 使用，注入DAO对象即可
-```
+```java
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

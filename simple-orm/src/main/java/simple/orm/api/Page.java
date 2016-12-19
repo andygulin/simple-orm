@@ -1,15 +1,15 @@
 package simple.orm.api;
 
-import java.io.IOException;
-import java.io.Serializable;
-import java.util.List;
-
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+
+import java.io.IOException;
+import java.io.Serializable;
+import java.util.List;
 
 public class Page<T> implements Serializable {
 	private static final long serialVersionUID = -5096317825486579427L;
@@ -36,19 +36,19 @@ public class Page<T> implements Serializable {
 	private long totalSize;
 
 	public static final <T> Page<T> build(List<T> result, Class<T> clazz, int pageNo, int pageSize, long totalSize) {
-		return new Page<T>(result, totalSize, pageNo, pageSize);
+		return new Page<>(result, totalSize, pageNo, pageSize);
 	}
 
 	public static final <T> Page<T> build(List<T> result, int pageNo, int pageSize, long totalSize) {
-		return new Page<T>(result, totalSize, pageNo, pageSize);
+		return new Page<>(result, totalSize, pageNo, pageSize);
 	}
 
 	public static final <T> Page<T> build(List<T> result, Class<T> clazz, long totalSize) {
-		return new Page<T>(result, totalSize, DEFAULT_PAGE_NO, DEFAULT_PAGE_SIZE);
+		return new Page<>(result, totalSize, DEFAULT_PAGE_NO, DEFAULT_PAGE_SIZE);
 	}
 
 	public static final <T> Page<T> build(List<T> result, Class<T> clazz, long totalSize, int pageNo) {
-		return new Page<T>(result, totalSize, pageNo, DEFAULT_PAGE_SIZE);
+		return new Page<>(result, totalSize, pageNo, DEFAULT_PAGE_SIZE);
 	}
 
 	public Page(List<T> result, long totalSize, int pageNo, int pageSize) {

@@ -1,26 +1,13 @@
 package simple.orm.meta;
 
+import org.apache.commons.lang.StringUtils;
+
+import javax.persistence.*;
 import java.beans.Transient;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.persistence.Table;
-
-import org.apache.commons.lang.StringUtils;
 
 public class EntityMetadata<T> {
 
@@ -31,7 +18,7 @@ public class EntityMetadata<T> {
 	public static final <E> EntityMetadata<E> newInstance(Class<E> clazz) {
 		EntityMetadata<E> foo;
 		if (!pool.containsKey(clazz)) {
-			foo = new EntityMetadata<E>(clazz);
+			foo = new EntityMetadata<>(clazz);
 			pool.put(clazz, foo);
 			return foo;
 		}
@@ -42,8 +29,8 @@ public class EntityMetadata<T> {
 	private String tableSchema;
 	private String tableName;
 	private String tableCatalog;
-	private Map<String, EntityColumnMetadata> fieldMap = new LinkedHashMap<String, EntityColumnMetadata>();
-	private Map<String, EntityColumnMetadata> columnMap = new LinkedHashMap<String, EntityColumnMetadata>();
+	private Map<String, EntityColumnMetadata> fieldMap = new LinkedHashMap<>();
+	private Map<String, EntityColumnMetadata> columnMap = new LinkedHashMap<>();
 	private Set<String> fields;
 	private Set<String> columns;
 	private Set<String> columnsWithQuote;
@@ -94,19 +81,19 @@ public class EntityMetadata<T> {
 	}
 
 	public Set<String> getFieldsNoPrimaryKey() {
-		Set<String> foo = new LinkedHashSet<String>(this.getAllFields());
+		Set<String> foo = new LinkedHashSet<>(this.getAllFields());
 		foo.remove(this.getPrimaryKey().getField());
 		return foo;
 	}
 
 	public Set<String> getColumnNamesNoPrimaryKey() {
-		Set<String> foo = new LinkedHashSet<String>(this.getAllColumnNames());
+		Set<String> foo = new LinkedHashSet<>(this.getAllColumnNames());
 		foo.remove(this.getPrimaryKey().getName());
 		return foo;
 	}
 
 	public Set<String> getColumnNamesWithQuoteNoPrimaryKey() {
-		Set<String> foo = new LinkedHashSet<String>(this.getAllColumnNamesWithQuote());
+		Set<String> foo = new LinkedHashSet<>(this.getAllColumnNamesWithQuote());
 		foo.remove(this.getPrimaryKey().getNameWithQuote());
 		return foo;
 	}
@@ -136,7 +123,7 @@ public class EntityMetadata<T> {
 
 		Field[] declaredFields = this.clazz.getDeclaredFields();
 
-		EntityColumnMetadata tempColumn = null;
+		EntityColumnMetadata tempColumn;
 		for (Field declaredField : declaredFields) {
 			tempColumn = this.parseColumnMetadata(declaredField);
 			if (tempColumn == null) {
@@ -163,16 +150,16 @@ public class EntityMetadata<T> {
 
 		this.fields = this.fieldMap.keySet();
 		this.columns = this.columnMap.keySet();
-		this.columnsWithQuote = new LinkedHashSet<String>();
+		this.columnsWithQuote = new LinkedHashSet<>();
 		for (String foo : columns) {
 			this.columnsWithQuote.add(foo);
 		}
-		this.entityColumnMetadatas = new HashSet<EntityColumnMetadata>(this.fieldMap.values());
+		this.entityColumnMetadatas = new HashSet<>(this.fieldMap.values());
 		this.qualifiedTableName = this.createQualifiedTableName();
 	}
 
 	private String createQualifiedTableName() {
-		final List<String> li = new ArrayList<String>();
+		final List<String> li = new ArrayList<>();
 		if (StringUtils.isNotBlank(this.tableSchema)) {
 			li.add("`" + this.tableSchema + "`");
 		}

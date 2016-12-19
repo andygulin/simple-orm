@@ -1,12 +1,5 @@
 package simple.orm.jdbc.impl;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.ListUtils;
 import org.apache.commons.lang.ArrayUtils;
@@ -16,7 +9,6 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-
 import simple.orm.api.CommonDao;
 import simple.orm.api.join.JoinResult;
 import simple.orm.api.query.Order;
@@ -28,6 +20,9 @@ import simple.orm.nsql.cmd.SQLResult;
 import simple.orm.utils.AopTargetUtils;
 import simple.orm.utils.DaoUtils;
 import simple.orm.utils.ObjectUtils;
+
+import java.util.*;
+import java.util.Map.Entry;
 
 @Repository
 public class CommonDaoImpl implements CommonDao {
@@ -50,7 +45,7 @@ public class CommonDaoImpl implements CommonDao {
 		String alias1 = "foo";
 		String alias2 = "bar";
 
-		List<String> tmpArr = new ArrayList<String>();
+		List<String> tmpArr = new ArrayList<>();
 
 		StringBuffer ssb;
 		for (EntityColumnMetadata metadata : dao1.getMetadata().getAllColumnMetadatas()) {
@@ -75,14 +70,14 @@ public class CommonDaoImpl implements CommonDao {
 				.append(alias2).append(".").append(dao2.getMetadata().getColumnByField(onField2).getName())
 				.append(AbstractDaoSupportImpl.CONST_WHERE).append(" 1=1 ");
 
-		List<Object> params = new ArrayList<Object>();
+		List<Object> params = new ArrayList<>();
 		dao1.parseQueryContext(sb, context1, params, alias1);
 		dao2.parseQueryContext(sb, context2, params, alias2);
 
 		if (ArrayUtils.isNotEmpty(order1) || ArrayUtils.isNotEmpty(order2)) {
 			sb.append(" order by ");
 		}
-		List<String> orderStrArr = new ArrayList<String>();
+		List<String> orderStrArr = new ArrayList<>();
 
 		if (ArrayUtils.isNotEmpty(order1)) {
 			for (Order foo : order1) {
@@ -113,14 +108,14 @@ public class CommonDaoImpl implements CommonDao {
 		if (CollectionUtils.isEmpty(li)) {
 			return ListUtils.EMPTY_LIST;
 		}
-		List<JoinResult> result = new ArrayList<JoinResult>(li.size());
+		List<JoinResult> result = new ArrayList<>(li.size());
 		Map<String, Object> map1;
 		Map<String, Object> map2;
 		JoinResult jr;
 		for (Map<String, Object> foo : li) {
 			jr = new JoinResult();
-			map1 = new HashMap<String, Object>();
-			map2 = new HashMap<String, Object>();
+			map1 = new HashMap<>();
+			map2 = new HashMap<>();
 			for (Iterator<Entry<String, Object>> it = foo.entrySet().iterator(); it.hasNext();) {
 				Entry<String, Object> entry = it.next();
 				if (entry.getKey().startsWith(alias1 + "___")) {
