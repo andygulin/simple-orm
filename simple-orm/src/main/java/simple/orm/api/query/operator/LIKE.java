@@ -4,10 +4,10 @@ package simple.orm.api.query.operator;
  * 模糊匹配
  */
 public enum LIKE implements Operator {
-	singleton;
+    singleton;
 
-	@Override
-	public String value() {
-		return OperatorConsts.STR_LIKE;
-	}
+    @Override
+    public String value() {
+        return OperatorConsts.STR_LIKE;
+    }
 }

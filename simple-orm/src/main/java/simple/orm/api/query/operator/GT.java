@@ -4,10 +4,10 @@ package simple.orm.api.query.operator;
  * 大于
  */
 public enum GT implements Operator {
-	singleton;
+    singleton;
 
-	@Override
-	public String value() {
-		return OperatorConsts.STR_GT;
-	}
+    @Override
+    public String value() {
+        return OperatorConsts.STR_GT;
+    }
 }

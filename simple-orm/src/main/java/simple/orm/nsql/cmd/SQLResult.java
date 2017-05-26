@@ -5,17 +5,17 @@ import java.util.Map;
 
 public interface SQLResult {
 
-	<T> T[] asArray();
+    <T> T[] asArray();
 
-	<T> List<T> asList();
+    <T> List<T> asList();
 
-	<T> T asBean();
+    <T> T asBean();
 
-	Map<String, Object> asMap();
+    Map<String, Object> asMap();
 
-	<T> T asBean(Class<T> tClass);
+    <T> T asBean(Class<T> tClass);
 
-	<T> List<T> asList(Class<T> tClass);
+    <T> List<T> asList(Class<T> tClass);
 
-	<T> T[] asArray(Class<T> tClass);
+    <T> T[] asArray(Class<T> tClass);
 }
