@@ -1,15 +1,11 @@
 package simple.orm.jdbc.ext;
 
-import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson2.JSON;
 import org.apache.commons.lang.ClassUtils;
 import org.apache.commons.lang.SerializationUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.BeanWrapper;
-import org.springframework.beans.NotWritablePropertyException;
-import org.springframework.beans.PropertyAccessorFactory;
-import org.springframework.beans.TypeMismatchException;
+import org.springframework.beans.*;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.jdbc.core.RowMapper;
@@ -42,6 +38,7 @@ public class NRowMapper<T> implements RowMapper<T> {
     private boolean primitivesDefaultedForNullValue = false;
     private Map<String, PropertyDescriptor> mappedFields;
     private Set<String> mappedProperties;
+
     public NRowMapper(LobHandler lobHandler, Class<T> mappedClass) {
         initialize(mappedClass);
         this.metadata = EntityMetadata.newInstance(mappedClass);

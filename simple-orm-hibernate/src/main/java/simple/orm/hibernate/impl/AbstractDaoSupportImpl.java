@@ -11,11 +11,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Criterion;
-import org.hibernate.criterion.MatchMode;
-import org.hibernate.criterion.Projections;
-import org.hibernate.criterion.Restrictions;
-import org.hibernate.criterion.SimpleExpression;
+import org.hibernate.criterion.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -48,7 +44,7 @@ import java.util.Map.Entry;
 @Transactional(rollbackFor = Exception.class)
 public abstract class AbstractDaoSupportImpl<T> implements DaoSupport<T> {
 
-    private static transient final Log log = LogFactory.getLog(AbstractDaoSupportImpl.class);
+    private static final Log log = LogFactory.getLog(AbstractDaoSupportImpl.class);
 
     @Autowired
     protected SessionFactory sessionFactory;
@@ -815,7 +811,7 @@ public abstract class AbstractDaoSupportImpl<T> implements DaoSupport<T> {
         Session session = this.getSession();
         for (T foo : t) {
             T old = this.load(this.getPrimaryValue(foo));
-            BeanUtils.copyProperties(foo, old, new String[]{this.pkName});
+            BeanUtils.copyProperties(foo, old, this.pkName);
             session.update(old);
         }
     }

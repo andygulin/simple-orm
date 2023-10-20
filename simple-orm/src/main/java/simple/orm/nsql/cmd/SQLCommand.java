@@ -18,9 +18,9 @@ import java.util.Map;
 
 public class SQLCommand {
 
-    private String sql;
-    private List<Object> params;
-    private Map<String, Class<?>> classMap;
+    private final String sql;
+    private final List<Object> params;
+    private final Map<String, Class<?>> classMap;
 
     public SQLCommand(String sql, List<Object> params, Map<String, Class<?>> classMap) {
         this.sql = sql;

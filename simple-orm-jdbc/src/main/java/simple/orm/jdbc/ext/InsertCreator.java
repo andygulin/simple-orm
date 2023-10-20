@@ -1,6 +1,6 @@
 package simple.orm.jdbc.ext;
 
-import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson2.JSON;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.SerializationUtils;
 import org.springframework.jdbc.core.PreparedStatementCreator;
@@ -21,11 +21,11 @@ import java.util.Set;
 
 public class InsertCreator<T> implements PreparedStatementCreator {
 
-    private LobHandler lobHandler;
-    private T t;
-    private EntityColumnMetadata[] metadatas;
-    private String[] columnNames;
-    private String sql;
+    private final LobHandler lobHandler;
+    private final T t;
+    private final EntityColumnMetadata[] metadatas;
+    private final String[] columnNames;
+    private final String sql;
 
     public InsertCreator(LobHandler lobHandler, T t, EntityMetadata<T> entityMetadata) {
         this.lobHandler = lobHandler;

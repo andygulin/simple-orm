@@ -3,8 +3,8 @@ package simple.orm.api.query;
 import org.apache.commons.lang.StringUtils;
 
 public class Order {
-    private boolean asc;
-    private String field;
+    private final boolean asc;
+    private final String field;
 
     private Order(boolean isAsc, String field) {
         if (StringUtils.isBlank(field)) {

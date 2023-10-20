@@ -24,13 +24,7 @@ import simple.orm.api.Page;
 import simple.orm.api.query.Order;
 import simple.orm.api.query.QueryContext;
 import simple.orm.api.query.QueryContextPiece;
-import simple.orm.api.query.operator.BETWEEN;
-import simple.orm.api.query.operator.IN;
-import simple.orm.api.query.operator.NOT_BETWEEN;
-import simple.orm.api.query.operator.NOT_IN;
-import simple.orm.api.query.operator.NOT_NULL;
-import simple.orm.api.query.operator.NULL;
-import simple.orm.api.query.operator.Operator;
+import simple.orm.api.query.operator.*;
 import simple.orm.exception.DaoException;
 import simple.orm.jdbc.ext.InsertCreator;
 import simple.orm.jdbc.ext.NRowMapper;
@@ -43,12 +37,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
 
 @Repository
@@ -57,60 +46,60 @@ public abstract class AbstractDaoSupportImpl<T> implements DaoSupport<T> {
     /**
      * Constant <code>CONST_EQ="="</code>
      */
-    protected static transient final String CONST_EQ = "=";
+    protected static final String CONST_EQ = "=";
     /**
      * Constant <code>CONST_AND=" and "</code>
      */
-    protected static transient final String CONST_AND = " and ";
+    protected static final String CONST_AND = " and ";
     /**
      * Constant <code>CONST_OR=" or "</code>
      */
-    protected static transient final String CONST_OR = " or ";
+    protected static final String CONST_OR = " or ";
     /**
      * Constant <code>CONST_WHERE=" where "</code>
      */
-    protected static transient final String CONST_WHERE = " where ";
+    protected static final String CONST_WHERE = " where ";
     /**
      * Constant <code>CONST_FROM=" from "</code>
      */
-    protected static transient final String CONST_FROM = " from ";
+    protected static final String CONST_FROM = " from ";
     /**
      * Constant <code>CONST_SELECT="select "</code>
      */
-    protected static transient final String CONST_SELECT = "select ";
+    protected static final String CONST_SELECT = "select ";
     /**
      * Constant <code>CONST_UPDATE="update "</code>
      */
-    protected static transient final String CONST_UPDATE = "update ";
+    protected static final String CONST_UPDATE = "update ";
     /**
      * Constant <code>CONST_COUNT=" count(*) "</code>
      */
-    protected static transient final String CONST_COUNT = " count(*) ";
+    protected static final String CONST_COUNT = " count(*) ";
     /**
      * Constant <code>CONST_ONE=" 1=1 "</code>
      */
-    protected static transient final String CONST_ONE = " 1=1 ";
+    protected static final String CONST_ONE = " 1=1 ";
     /**
      * Constant <code>CONST_ORDER_BY=" order by "</code>
      */
-    protected static transient final String CONST_ORDER_BY = " order by ";
+    protected static final String CONST_ORDER_BY = " order by ";
     /**
      * Constant <code>CONST_ORDER_BY_ASC=" asc "</code>
      */
-    protected static transient final String CONST_ORDER_BY_ASC = " asc ";
+    protected static final String CONST_ORDER_BY_ASC = " asc ";
     /**
      * Constant <code>CONST_ORDER_BY_DESC=" desc "</code>
      */
-    protected static transient final String CONST_ORDER_BY_DESC = " desc ";
+    protected static final String CONST_ORDER_BY_DESC = " desc ";
     /**
      * Constant <code>CONST_SPACE=" "</code>
      */
-    protected static transient final String CONST_SPACE = " ";
+    protected static final String CONST_SPACE = " ";
     /**
      * Constant <code>CONST_DELETE="delete "</code>
      */
-    protected static transient final String CONST_DELETE = "delete ";
-    private static transient final Log log = LogFactory.getLog(AbstractDaoSupportImpl.class);
+    protected static final String CONST_DELETE = "delete ";
+    private static final Log log = LogFactory.getLog(AbstractDaoSupportImpl.class);
     protected EntityMetadata<T> metadata;
 
     protected String selectHead;
@@ -316,7 +305,7 @@ public abstract class AbstractDaoSupportImpl<T> implements DaoSupport<T> {
 
             sb.append(i == len - 1 ? ") ENGINE=InnoDB DEFAULT CHARSET=utf8" : ",");
         }
-        System.out.println(sb.toString());
+        System.out.println(sb);
         this.jdbcTemplate.execute(sb.toString());
     }
 
@@ -325,10 +314,8 @@ public abstract class AbstractDaoSupportImpl<T> implements DaoSupport<T> {
         if (primaryfield == null) {
             throw new DaoException("cannot delete entity: primary value is null.");
         }
-        StringBuffer sb = new StringBuffer(CONST_DELETE);
-        sb.append(CONST_FROM).append(this.metadata.getQualifiedTableName()).append(CONST_WHERE)
-                .append(this.metadata.getPrimaryKey().getName()).append(CONST_EQ).append("?");
-        final String sql = sb.toString();
+        final String sql = CONST_DELETE + CONST_FROM + this.metadata.getQualifiedTableName() + CONST_WHERE +
+                this.metadata.getPrimaryKey().getName() + CONST_EQ + "?";
         try {
             this.jdbcTemplate.update(sql, primaryfield);
         } catch (Throwable e) {
@@ -378,9 +365,9 @@ public abstract class AbstractDaoSupportImpl<T> implements DaoSupport<T> {
 
     @Override
     public void deleteAll() throws DaoException {
-        StringBuffer sb = new StringBuffer(CONST_DELETE).append(CONST_FROM)
-                .append(this.metadata.getQualifiedTableName());
-        this.jdbcTemplate.update(sb.toString());
+        String sb = CONST_DELETE + CONST_FROM +
+                this.metadata.getQualifiedTableName();
+        this.jdbcTemplate.update(sb);
     }
 
     @Override
@@ -514,11 +501,9 @@ public abstract class AbstractDaoSupportImpl<T> implements DaoSupport<T> {
     }
 
     private void innerUpdate(T t) throws DaoException {
-        final StringBuffer sb = new StringBuffer("update ");
-        sb.append(this.metadata.getQualifiedTableName()).append(" set ").append(this.updateHeadNoPK);
-        sb.append(CONST_WHERE).append(this.metadata.getPrimaryKey().getName()).append("=:")
-                .append(this.metadata.getPrimaryKey().getField());
-        final String sql = sb.toString();
+        final String sql = "update " + this.metadata.getQualifiedTableName() + " set " + this.updateHeadNoPK +
+                CONST_WHERE + this.metadata.getPrimaryKey().getName() + "=:" +
+                this.metadata.getPrimaryKey().getField();
         try {
             this.namedParameterJdbcTemplate.update(sql, createSqlParameterSource(t));
         } catch (Throwable e) {
@@ -528,11 +513,9 @@ public abstract class AbstractDaoSupportImpl<T> implements DaoSupport<T> {
 
     @Override
     public T load(Serializable primaryfield) throws DaoException {
-        StringBuffer sb = new StringBuffer();
-        sb.append(CONST_SELECT).append(this.selectHead).append(CONST_FROM)
-                .append(this.metadata.getQualifiedTableName());
-        sb.append(CONST_WHERE).append(this.metadata.getPrimaryKey().getName()).append(CONST_EQ).append("? limit 0,1");
-        final String sql = sb.toString();
+        final String sql = CONST_SELECT + this.selectHead + CONST_FROM +
+                this.metadata.getQualifiedTableName() +
+                CONST_WHERE + this.metadata.getPrimaryKey().getName() + CONST_EQ + "? limit 0,1";
         List<T> li = this.jdbcTemplate.query(sql, new Object[]{primaryfield}, createRowMapper());
         if (CollectionUtils.isNotEmpty(li)) {
             return li.get(0);

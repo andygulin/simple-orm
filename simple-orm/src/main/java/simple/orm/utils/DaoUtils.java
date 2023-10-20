@@ -10,7 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class DaoUtils {
 
     @SuppressWarnings("rawtypes")
-    private static transient final Map<Class, DaoSupport> daocache = new ConcurrentHashMap<Class, DaoSupport>();
+    private static final Map<Class, DaoSupport> daocache = new ConcurrentHashMap<Class, DaoSupport>();
 
     public static final CommonDao getCommonDao() {
         return OrmApplicationContextUtils.getApplicationContext().getBean(CommonDao.class);

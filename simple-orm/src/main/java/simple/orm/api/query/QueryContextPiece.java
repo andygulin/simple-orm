@@ -7,19 +7,20 @@ public class QueryContextPiece {
     /**
      * 字段
      */
-    private String field;
+    private final String field;
     /**
      * 运算值
      */
-    private Object[] values;
+    private final Object[] values;
     /**
      * 运算操作符
      */
-    private Operator operator;
+    private final Operator operator;
     /**
      * 拼接逻辑
      */
-    private LogicEnum appendType;
+    private final LogicEnum appendType;
+
     public QueryContextPiece(LogicEnum appendType, String field, Operator operator, Object[] values) {
         this.field = field;
         this.values = values;

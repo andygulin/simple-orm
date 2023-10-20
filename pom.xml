@@ -7,20 +7,20 @@
     <version>0.0.1</version>
     <packaging>pom</packaging>
     <name>simple-orm-pom</name>
-    <url>http://maven.apache.org</url>
+    <url>https://maven.apache.org</url>
 
     <properties>
-        <compile.level>1.7</compile.level>
+        <compile.level>1.8</compile.level>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <spring.version>4.3.8.RELEASE</spring.version>
-        <fastjson.version>1.2.32</fastjson.version>
-        <druid.version>1.0.31</druid.version>
+        <fastjson2.version>2.0.41</fastjson2.version>
+        <druid.version>1.2.20</druid.version>
         <persistence-api.version>1.0-rev-1</persistence-api.version>
         <commons-configuration.version>1.10</commons-configuration.version>
-        <commons-beanutils.version>1.9.3</commons-beanutils.version>
-        <commons-io.version>2.5</commons-io.version>
-        <mysql-connector-java.version>5.1.42</mysql-connector-java.version>
+        <commons-beanutils.version>1.9.4</commons-beanutils.version>
+        <commons-io.version>2.14.0</commons-io.version>
+        <mysql-connector-j.version>8.0.33</mysql-connector-j.version>
 
         <maven-surefire-plugin.version>2.20</maven-surefire-plugin.version>
         <maven-source-plugin.version>3.0.1</maven-source-plugin.version>
@@ -51,9 +51,9 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>${fastjson.version}</version>
+            <groupId>com.alibaba.fastjson2</groupId>
+            <artifactId>fastjson2</artifactId>
+            <version>${fastjson2.version}</version>
         </dependency>
         <dependency>
             <groupId>com.alibaba</groupId>
@@ -81,9 +81,9 @@
             <version>${commons-io.version}</version>
         </dependency>
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>${mysql-connector-java.version}</version>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <version>${mysql-connector-j.version}</version>
         </dependency>
     </dependencies>
 

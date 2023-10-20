@@ -2,41 +2,30 @@ package simple.orm.meta;
 
 import org.apache.commons.lang.StringUtils;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.beans.Transient;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class EntityMetadata<T> {
 
     @SuppressWarnings("rawtypes")
     private static final Map<Class, EntityMetadata> pool = new ConcurrentHashMap<>();
-    private Class<T> clazz;
+    private final Class<T> clazz;
     private String tableSchema;
     private String tableName;
     private String tableCatalog;
-    private Map<String, EntityColumnMetadata> fieldMap = new LinkedHashMap<>();
-    private Map<String, EntityColumnMetadata> columnMap = new LinkedHashMap<>();
+    private final Map<String, EntityColumnMetadata> fieldMap = new LinkedHashMap<>();
+    private final Map<String, EntityColumnMetadata> columnMap = new LinkedHashMap<>();
     private Set<String> fields;
     private Set<String> columns;
     private Set<String> columnsWithQuote;
     private Set<EntityColumnMetadata> entityColumnMetadatas;
     private String primaryKey;
     private String qualifiedTableName;
+
     public EntityMetadata(Class<T> clazz) {
         if (clazz == null) {
             throw new RuntimeException("create entity metadata error: class cannot be null.");

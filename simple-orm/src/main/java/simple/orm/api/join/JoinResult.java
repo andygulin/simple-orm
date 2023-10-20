@@ -1,6 +1,6 @@
 package simple.orm.api.join;
 
-import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson2.JSON;
 import org.springframework.beans.BeanUtils;
 
 import java.util.Iterator;
@@ -10,7 +10,7 @@ import java.util.Map.Entry;
 
 public class JoinResult {
 
-    private Map<Class<?>, Object> resultMap = new LinkedHashMap<Class<?>, Object>();
+    private final Map<Class<?>, Object> resultMap = new LinkedHashMap<Class<?>, Object>();
 
     public void add(Object obj) {
         this.resultMap.put(obj.getClass(), obj);

@@ -1,6 +1,6 @@
 package simple.orm.nsql.cmd;
 
-import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson2.JSON;
 import org.apache.commons.collections.MapUtils;
 import simple.orm.meta.EntityMetadata;
 
@@ -11,9 +11,9 @@ import java.util.Map;
 
 public class MappedSQLResult implements SQLResult {
 
-    private List<Map<String, Object>> data;
-    private Map<String, Class<?>> classMap;
-    private boolean isSingleBean;
+    private final List<Map<String, Object>> data;
+    private final Map<String, Class<?>> classMap;
+    private final boolean isSingleBean;
 
     private Class<?> singleClass;
 

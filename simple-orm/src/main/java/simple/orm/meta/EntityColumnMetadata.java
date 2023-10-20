@@ -1,6 +1,6 @@
 package simple.orm.meta;
 
-import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson2.JSON;
 
 public class EntityColumnMetadata {
 

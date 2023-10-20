@@ -21,17 +21,13 @@ import simple.orm.utils.AopTargetUtils;
 import simple.orm.utils.DaoUtils;
 import simple.orm.utils.ObjectUtils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
 
 @Repository
 public class CommonDaoImpl implements CommonDao {
 
-    private static transient final Log log = LogFactory.getLog(CommonDaoImpl.class);
+    private static final Log log = LogFactory.getLog(CommonDaoImpl.class);
 
     @Autowired
     private JdbcTemplate jdbcTemplate;

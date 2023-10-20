@@ -1,19 +1,6 @@
 package simple.orm.api.query;
 
-import simple.orm.api.query.operator.BETWEEN;
-import simple.orm.api.query.operator.EQ;
-import simple.orm.api.query.operator.GE;
-import simple.orm.api.query.operator.GT;
-import simple.orm.api.query.operator.IN;
-import simple.orm.api.query.operator.LE;
-import simple.orm.api.query.operator.LIKE;
-import simple.orm.api.query.operator.LT;
-import simple.orm.api.query.operator.NOT_BETWEEN;
-import simple.orm.api.query.operator.NOT_EQ;
-import simple.orm.api.query.operator.NOT_IN;
-import simple.orm.api.query.operator.NOT_NULL;
-import simple.orm.api.query.operator.NULL;
-import simple.orm.api.query.operator.Operator;
+import simple.orm.api.query.operator.*;
 
 import java.util.Iterator;
 import java.util.LinkedHashSet;
@@ -21,7 +8,7 @@ import java.util.Set;
 
 public class QueryContext implements Iterable<QueryContextPiece> {
 
-    private Set<QueryContextPiece> pieces = new LinkedHashSet<>();
+    private final Set<QueryContextPiece> pieces = new LinkedHashSet<>();
 
     public QueryContext clear() {
         this.pieces.clear();
